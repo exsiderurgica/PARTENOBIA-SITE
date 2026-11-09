@@ -30,6 +30,24 @@ jobs:
           mkdir -p _site
           unzip -p /tmp/partenobia-gold-v21.zip PARTENOBIA_V21_AUDIO_GESTI_7S_TEST.html > _site/index.html
           echo '6f0538e36b68d12bd651f470f439090aa513ea11f9eafd9d8cc3da32f9d30c15  _site/index.html' | sha256sum -c -
+          # GOLD file stays checksum-verified; only public page metadata is updated.
+          python - <<'PY'
+          from pathlib import Path
+          page = Path("_site/index.html")
+          html = page.read_text(encoding="utf-8")
+          old = "<title>PARTENOBIA V21 TEST — audio, gesto e trasformazione 7s</title>"
+          assert html.count(old) == 1, "Unexpected GOLD V21 HTML title; refusing to alter gameplay build"
+          meta = """<title>PARTENOBIA — GOLD V21</title>
+          <meta name="description" content="PARTENOBIA, survival horror ambientato a Napoli. Gioca online alla versione GOLD V21.">
+          <meta property="og:type" content="website">
+          <meta property="og:title" content="PARTENOBIA — GOLD V21">
+          <meta property="og:description" content="Survival horror ambientato a Napoli. Gioca a PARTENOBIA GOLD V21 online.">
+          <meta property="og:url" content="https://exsiderurgica.github.io/PARTENOBIA-SITE/">
+          <meta name="twitter:card" content="summary">
+          <meta name="twitter:title" content="PARTENOBIA — GOLD V21">
+          """
+          page.write_text(html.replace(old, meta, 1), encoding="utf-8")
+          PY
           touch _site/.nojekyll
           printf 'PARTENOBIA GOLD V21 | 2026-11-09 | sha256 6f0538e36b68d12bd651f470f439090aa513ea11f9eafd9d8cc3da32f9d30c15\n' > _site/version.txt
       - name: Upload GOLD V21 website
