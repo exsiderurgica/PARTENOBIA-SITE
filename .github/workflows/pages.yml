@@ -1,4 +1,4 @@
-name: Deploy PARTENOBIA to GitHub Pages
+name: Deploy PARTENOBIA GOLD V21 to GitHub Pages
 on:
   push:
     branches: [main]
@@ -21,10 +21,20 @@ jobs:
         uses: actions/checkout@v4
       - name: Configure Pages
         uses: actions/configure-pages@v5
-      - name: Upload website
+      - name: Download pinned GOLD V21 from archive
+        run: |
+          set -euo pipefail
+          python -m pip install --quiet 'gdown==5.2.0'
+          gdown --id '1QhsMl2iBOSgo-pfrWlHLLajGFtrIvzOi' -O /tmp/partenobia-gold-v21.zip --quiet
+          echo '18b05fb47023e5513c27b923ca1590deb93bccc2a02fa7036899de0ebaa7dba2  /tmp/partenobia-gold-v21.zip' | sha256sum -c -
+          mkdir -p _site
+          unzip -p /tmp/partenobia-gold-v21.zip PARTENOBIA_V21_AUDIO_GESTI_7S_TEST.html > _site/index.html
+          echo '6f0538e36b68d12bd651f470f439090aa513ea11f9eafd9d8cc3da32f9d30c15  _site/index.html' | sha256sum -c -
+          touch _site/.nojekyll
+      - name: Upload GOLD V21 website
         uses: actions/upload-pages-artifact@v3
         with:
-          path: .
+          path: _site
       - name: Deploy
         id: deployment
         uses: actions/deploy-pages@v4
