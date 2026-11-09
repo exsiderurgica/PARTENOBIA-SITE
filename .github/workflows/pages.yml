@@ -31,10 +31,14 @@ jobs:
           unzip -p /tmp/partenobia-gold-v21.zip PARTENOBIA_V21_AUDIO_GESTI_7S_TEST.html > _site/index.html
           echo '6f0538e36b68d12bd651f470f439090aa513ea11f9eafd9d8cc3da32f9d30c15  _site/index.html' | sha256sum -c -
           touch _site/.nojekyll
+          printf 'PARTENOBIA GOLD V21 | 2026-11-09 | sha256 6f0538e36b68d12bd651f470f439090aa513ea11f9eafd9d8cc3da32f9d30c15\n' > _site/version.txt
       - name: Upload GOLD V21 website
         uses: actions/upload-pages-artifact@v3
         with:
+          name: ${{ format('github-pages-{0}-{1}', github.run_id, github.run_attempt) }}
           path: _site
       - name: Deploy
         id: deployment
         uses: actions/deploy-pages@v4
+        with:
+          artifact_name: ${{ format('github-pages-{0}-{1}', github.run_id, github.run_attempt) }}
