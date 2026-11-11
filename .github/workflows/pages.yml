@@ -1,4 +1,4 @@
-name: Build and deploy PARTENOBIA V22U - Edoardo nuovo
+name: Build and deploy PARTENOBIA GOLD V22U - Edoardo nuovo
 on:
   push:
     branches: [main]
@@ -31,8 +31,9 @@ jobs:
           set -euo pipefail
           python scripts/edoardo_nuovo.py --baseline /tmp/partenobia-gold-v22t.html --asset assets/edoardo-nuovo.glb --runtime scripts/edoardo-nuovo.js --output _site/index.html --receipt _site/build.json
           echo '442240998f4e104cc99a66775622db0398cd33c9257247188eed443967dbf169  _site/index.html' | sha256sum -c -
+          cp release.json _site/release.json
           touch _site/.nojekyll
-          printf 'PARTENOBIA V22U | Edoardo nuovo | 2026-11-11 | sha256 442240998f4e104cc99a66775622db0398cd33c9257247188eed443967dbf169\n' > _site/version.txt
+          printf 'PARTENOBIA GOLD V22U | Edoardo nuovo | 2026-11-11 | sha256 442240998f4e104cc99a66775622db0398cd33c9257247188eed443967dbf169\n' > _site/version.txt
       - name: Upload verified website
         uses: actions/upload-pages-artifact@v3
         with:

@@ -85,7 +85,7 @@ def build(baseline, asset, runtime, output, receipt=None):
     finally:
         if temporary:
             temporary.unlink(missing_ok=True)
-    result = {'version': 'V22U', 'change': 'Edoardo nuovo in tutte le cinque istanze',
+    result = {'version': 'V22U', 'status': 'GOLD', 'stable': True, 'approved_on': '2026-11-11', 'change': 'Edoardo nuovo in tutte le cinque istanze',
               'baseline_sha256': BASE_SHA, 'asset_id': ASSET_ID, 'asset_sha256': ASSET_SHA,
               'html_sha256': sha(data), 'html_bytes': len(data),
               'rooms': ['vicolo-storico', 'fontanelle', 'chapel', 'station', 'stairs']}
