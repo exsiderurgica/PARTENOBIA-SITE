@@ -1,61 +1,57 @@
-name: Deploy PARTENOBIA GOLD V22T to GitHub Pages
+name: Build and deploy PARTENOBIA V22U - Edoardo nuovo
 on:
   push:
     branches: [main]
+  pull_request:
   workflow_dispatch:
 permissions:
   contents: read
-  pages: write
-  id-token: write
 concurrency:
-  group: pages
+  group: pages-${{ github.ref }}
   cancel-in-progress: true
 jobs:
-  deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+  build:
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - name: Configure Pages
-        uses: actions/configure-pages@v5
-      - name: Download pinned GOLD V22T from archive
+        with:
+          persist-credentials: false
+      - name: Download and verify immutable GOLD V22T baseline
         run: |
           set -euo pipefail
           python -m pip install --quiet 'gdown==5.2.0'
-          gdown --id '1fUp-NFrIM0mHDyADMgFHjx8ssRJplfb6' -O /tmp/partenobia-gold-v22t.zip --quiet
+          gdown '1fUp-NFrIM0mHDyADMgFHjx8ssRJplfb6' -O /tmp/partenobia-gold-v22t.zip --quiet
           echo '4195db599f8921d3cb2f483a28d25b8c6a6dcd8a7d460f5e5e6d09537eccb0dd  /tmp/partenobia-gold-v22t.zip' | sha256sum -c -
-          mkdir -p _site
-          unzip -p /tmp/partenobia-gold-v22t.zip PARTENOBIA_V22T_PRECARICAMENTO_ZOMBIE_TUTTE_SCENE_TEST.html > _site/index.html
-          echo '6515c8be9ffbbc3484472116b6338e894077093f4e5093a73a9804ff911a0a6e  _site/index.html' | sha256sum -c -
-          # GOLD file stays checksum-verified; only public page metadata is updated.
-          python - <<'PY'
-          from pathlib import Path
-          page = Path("_site/index.html")
-          html = page.read_text(encoding="utf-8")
-          old = "<title>PARTENOBIA V22T TEST — zombie precaricati in tutte le schermate</title>"
-          assert html.count(old) == 1, "Unexpected GOLD V22T HTML title; refusing to alter gameplay build"
-          meta = """<title>PARTENOBIA — GOLD V22T</title>
-          <meta name="description" content="PARTENOBIA, survival horror ambientato a Napoli. Gioca online alla versione GOLD V22T.">
-          <meta property="og:type" content="website">
-          <meta property="og:title" content="PARTENOBIA — GOLD V22T">
-          <meta property="og:description" content="Survival horror ambientato a Napoli. Gioca a PARTENOBIA GOLD V22T online.">
-          <meta property="og:url" content="https://exsiderurgica.github.io/PARTENOBIA-SITE/">
-          <meta name="twitter:card" content="summary">
-          <meta name="twitter:title" content="PARTENOBIA — GOLD V22T">
-          """
-          page.write_text(html.replace(old, meta, 1), encoding="utf-8")
-          PY
-          echo '59808fee08cdf413177c454fd36dcf5fdc35cbab4a876e8fa3bce4e378752fe9  _site/index.html' | sha256sum -c -
+          unzip -p /tmp/partenobia-gold-v22t.zip PARTENOBIA_V22T_PRECARICAMENTO_ZOMBIE_TUTTE_SCENE_TEST.html > /tmp/partenobia-gold-v22t.html
+          echo '6515c8be9ffbbc3484472116b6338e894077093f4e5093a73a9804ff911a0a6e  /tmp/partenobia-gold-v22t.html' | sha256sum -c -
+      - name: Replace every Edoardo with the approved new GLB
+        run: |
+          set -euo pipefail
+          python scripts/edoardo_nuovo.py --baseline /tmp/partenobia-gold-v22t.html --asset assets/edoardo-nuovo.glb --runtime scripts/edoardo-nuovo.js --output _site/index.html --receipt _site/build.json
+          echo '442240998f4e104cc99a66775622db0398cd33c9257247188eed443967dbf169  _site/index.html' | sha256sum -c -
           touch _site/.nojekyll
-          printf 'PARTENOBIA GOLD V22T | 2026-11-10 | sha256 6515c8be9ffbbc3484472116b6338e894077093f4e5093a73a9804ff911a0a6e\n' > _site/version.txt
-      - name: Upload GOLD V22T website
+          printf 'PARTENOBIA V22U | Edoardo nuovo | 2026-11-11 | sha256 442240998f4e104cc99a66775622db0398cd33c9257247188eed443967dbf169\n' > _site/version.txt
+      - name: Upload verified website
         uses: actions/upload-pages-artifact@v3
         with:
           name: ${{ format('github-pages-{0}-{1}', github.run_id, github.run_attempt) }}
           path: _site
+  deploy:
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+    needs: build
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    permissions:
+      pages: write
+      id-token: write
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
       - name: Deploy
         id: deployment
         uses: actions/deploy-pages@v4
