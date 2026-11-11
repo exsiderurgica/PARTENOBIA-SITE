@@ -48,7 +48,7 @@ jobs:
           """
           page.write_text(html.replace(old, meta, 1), encoding="utf-8")
           PY
-          echo 'c768ad18336230eb475d2aa293b30bea857a5b50a5788108d2fca397cc339b98  _site/index.html' | sha256sum -c -
+          echo '59808fee08cdf413177c454fd36dcf5fdc35cbab4a876e8fa3bce4e378752fe9  _site/index.html' | sha256sum -c -
           touch _site/.nojekyll
           printf 'PARTENOBIA GOLD V22T | 2026-11-10 | sha256 6515c8be9ffbbc3484472116b6338e894077093f4e5093a73a9804ff911a0a6e\n' > _site/version.txt
       - name: Upload GOLD V22T website
