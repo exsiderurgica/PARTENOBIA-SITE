@@ -1,24 +1,36 @@
 {
-  "version": "GOLD V22U",
-  "status": "GOLD",
-  "stable": true,
-  "approved_on": "2026-11-11",
-  "approval": "Esplicita dell’autore: flagga come stabile Gold",
-  "html": {
-    "name": "PARTENOBIA_GOLD_V22U_2026-11-11.html",
-    "bytes": 79872178,
-    "sha256": "442240998f4e104cc99a66775622db0398cd33c9257247188eed443967dbf169"
+  "version": "V22W",
+  "status": "TEST",
+  "stable": false,
+  "change": "Zombie Diego V2 nella chiesa del Gesu; tutti gli zombie usano i passi di Pulcinella",
+  "baseline_sha256": "442240998f4e104cc99a66775622db0398cd33c9257247188eed443967dbf169",
+  "asset_sha256": "658a2cd501eeef95270727e34043d32741909a44cdb9be642c8a9f7f79ed2718",
+  "html_sha256": "76d4fa244610195322f1aa955bdf40725cc187d28873c2a5fd433da919f17fca",
+  "html_bytes": 80392259,
+  "released_on": "2026-11-12",
+  "previous_gold": {
+    "version": "GOLD V22U",
+    "status": "GOLD",
+    "stable": true,
+    "approved_on": "2026-11-11",
+    "approval": "Esplicita dell\u2019autore: flagga come stabile Gold",
+    "html": {
+      "name": "PARTENOBIA_GOLD_V22U_2026-11-11.html",
+      "bytes": 79872178,
+      "sha256": "442240998f4e104cc99a66775622db0398cd33c9257247188eed443967dbf169"
+    },
+    "zip": {
+      "name": "PARTENOBIA_GOLD_V22U_2026-11-11.zip",
+      "bytes": 47815012,
+      "sha256": "500f3c6a452b5a50dd7a851a4f752cda586e18be273869faae00386aca86633b"
+    },
+    "asset": "Edoardo nuovo",
+    "previous_gold": "V22T",
+    "folder_url": "https://drive.google.com/drive/folders/1HvnCvsVd--gtPcULBkfbjuKwQ7T49JtS",
+    "html_url": "https://drive.google.com/file/d/1__mCmpIb1YO8gCj43pau5muauUylw77B/view",
+    "zip_url": "https://drive.google.com/file/d/15JufQRmqRvhELjwUE5MDg958aCcAray0/view",
+    "manifest_url": "https://drive.google.com/file/d/1oNRgEo2qZfyr348yToy498UabbBw960s/view",
+    "tag": "gold-v22u-2026-11-11"
   },
-  "zip": {
-    "name": "PARTENOBIA_GOLD_V22U_2026-11-11.zip",
-    "bytes": 47815012,
-    "sha256": "500f3c6a452b5a50dd7a851a4f752cda586e18be273869faae00386aca86633b"
-  },
-  "asset": "Edoardo nuovo",
-  "previous_gold": "V22T",
-  "folder_url": "https://drive.google.com/drive/folders/1HvnCvsVd--gtPcULBkfbjuKwQ7T49JtS",
-  "html_url": "https://drive.google.com/file/d/1__mCmpIb1YO8gCj43pau5muauUylw77B/view",
-  "zip_url": "https://drive.google.com/file/d/15JufQRmqRvhELjwUE5MDg958aCcAray0/view",
-  "manifest_url": "https://drive.google.com/file/d/1oNRgEo2qZfyr348yToy498UabbBw960s/view",
-  "tag": "gold-v22u-2026-11-11"
+  "protagonist": "GOLD V22U original; no protagonist trial assets published"
 }
