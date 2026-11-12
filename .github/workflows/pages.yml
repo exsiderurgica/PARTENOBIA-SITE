@@ -1,4 +1,4 @@
-name: Build and deploy PARTENOBIA V22X - Edoardo nuovo in cab
+name: Build and deploy PARTENOBIA V22Y - Zombie Pescivendolo V2
 on:
   push:
     branches: [main]
@@ -39,11 +39,16 @@ jobs:
       - name: Replace only the cab fishmonger with Edoardo nuovo
         run: |
           set -euo pipefail
-          python scripts/edoardo_vagone.py --baseline /tmp/partenobia-v22w.html --output _site/index.html --receipt _site/build.json
-          echo '41ea64dc502648e07b3b669ad0c8ce4a91ad1942138899ea8d35a4f76e7cb65c  _site/index.html' | sha256sum -c -
+          python scripts/edoardo_vagone.py --baseline /tmp/partenobia-v22w.html --output /tmp/partenobia-v22x.html --receipt /tmp/v22x-build.json
+          echo '41ea64dc502648e07b3b669ad0c8ce4a91ad1942138899ea8d35a4f76e7cb65c  /tmp/partenobia-v22x.html' | sha256sum -c -
+      - name: Replace remaining fishmongers with Zombie Pescivendolo V2
+        run: |
+          set -euo pipefail
+          python scripts/pescivendolo_v2.py --baseline /tmp/partenobia-v22x.html --asset assets/zombie-pescivendolo-v2.glb --runtime scripts/pescivendolo-v2.js --output _site/index.html --receipt _site/build.json
+          echo '42cfb06dfacecd9e9053d5c109cf944263979c27cae7481fe748aaa1dd60d964  _site/index.html' | sha256sum -c -
           cp release.json _site/release.json
           touch _site/.nojekyll
-          printf 'PARTENOBIA V22X TEST | Edoardo nuovo nel vagone | 2026-11-12\n' > _site/version.txt
+          printf 'PARTENOBIA V22Y TEST | Zombie Pescivendolo V2 | 2026-11-12\n' > _site/version.txt
       - name: Upload verified website
         uses: actions/upload-pages-artifact@v3
         with:

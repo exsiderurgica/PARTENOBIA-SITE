@@ -1,15 +1,18 @@
 {
-  "version": "V22X",
+  "version": "V22Y",
   "status": "TEST",
   "stable": false,
-  "change": "Edoardo nuovo sostituisce solo il Pescivendolo nel vagone; Diego V2 e passi Pulcinella conservati",
-  "baseline_sha256": "76d4fa244610195322f1aa955bdf40725cc187d28873c2a5fd433da919f17fca",
-  "asset_id": "EDOARDO_NUOVO_V01",
-  "asset_sha256": "1226bd1929754f19fd1e98fecffbec849261d7f914b7ef8c5af2f1c50f0b223e",
-  "html_sha256": "41ea64dc502648e07b3b669ad0c8ce4a91ad1942138899ea8d35a4f76e7cb65c",
-  "html_bytes": 80392241,
+  "change": "Zombie Pescivendolo V2 sostituisce tutti i vecchi Pescivendoli ancora attivi; Edoardo nel vagone conservato",
+  "baseline_sha256": "41ea64dc502648e07b3b669ad0c8ce4a91ad1942138899ea8d35a4f76e7cb65c",
+  "asset_id": "ZOMBIE_PESCIVENDOLO_V2",
+  "asset_sha256": "fa2fb2711747bddafffef1d2d8f6ed34ebe5cfe578a00b590b4feb84ec77f899",
+  "html_sha256": "42cfb06dfacecd9e9053d5c109cf944263979c27cae7481fe748aaa1dd60d964",
+  "html_bytes": 82213613,
+  "rooms": [
+    "station"
+  ],
   "released_on": "2026-11-12",
-  "previous_version": "V22W",
+  "previous_version": "V22X",
   "previous_gold": {
     "version": "GOLD V22U",
     "status": "GOLD",
