@@ -1,4 +1,4 @@
-name: Build and deploy PARTENOBIA V22Z - Diego V2 arms corrected
+name: Build and deploy PARTENOBIA V23A - Diego forward arms and proportions
 on:
   push:
     branches: [main]
@@ -49,11 +49,16 @@ jobs:
       - name: Calibrate Diego V2 hanging arm pose
         run: |
           set -euo pipefail
-          python scripts/diego_braccia.py --baseline /tmp/partenobia-v22y.html --runtime scripts/diego-v2-arms.js --output _site/index.html --receipt _site/build.json
-          echo '3b6e9e3401865f8cf18897c02cbcbd0dab6d3d34ac373449491221be34b5e8dc  _site/index.html' | sha256sum -c -
+          python scripts/diego_braccia.py --baseline /tmp/partenobia-v22y.html --runtime scripts/diego-v2-arms.js --output /tmp/partenobia-v22z.html --receipt /tmp/v22z-build.json
+          echo '3b6e9e3401865f8cf18897c02cbcbd0dab6d3d34ac373449491221be34b5e8dc  /tmp/partenobia-v22z.html' | sha256sum -c -
+      - name: Hang Diego arms forward and share church perspective scale
+        run: |
+          set -euo pipefail
+          python scripts/diego_braccia_avanti.py --baseline /tmp/partenobia-v22z.html --runtime scripts/diego-v2-forward-arms.js --output _site/index.html --receipt _site/build.json
+          echo '5c910cdc7e0afef48cb181e053f0f5f603a93b5d428a56e8359f9f2f2ee89b8a  _site/index.html' | sha256sum -c -
           cp release.json _site/release.json
           touch _site/.nojekyll
-          printf 'PARTENOBIA V22Z TEST | Diego V2 braccia corrette | 2026-11-12\n' > _site/version.txt
+          printf 'PARTENOBIA V23A TEST | Diego braccia avanti e proporzioni | 2026-11-12\n' > _site/version.txt
       - name: Upload verified website
         uses: actions/upload-pages-artifact@v3
         with:
