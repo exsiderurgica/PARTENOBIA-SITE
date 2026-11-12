@@ -1,4 +1,4 @@
-name: Build and deploy PARTENOBIA V22Y - Zombie Pescivendolo V2
+name: Build and deploy PARTENOBIA V22Z - Diego V2 arms corrected
 on:
   push:
     branches: [main]
@@ -44,11 +44,16 @@ jobs:
       - name: Replace remaining fishmongers with Zombie Pescivendolo V2
         run: |
           set -euo pipefail
-          python scripts/pescivendolo_v2.py --baseline /tmp/partenobia-v22x.html --asset assets/zombie-pescivendolo-v2.glb --runtime scripts/pescivendolo-v2.js --output _site/index.html --receipt _site/build.json
-          echo '42cfb06dfacecd9e9053d5c109cf944263979c27cae7481fe748aaa1dd60d964  _site/index.html' | sha256sum -c -
+          python scripts/pescivendolo_v2.py --baseline /tmp/partenobia-v22x.html --asset assets/zombie-pescivendolo-v2.glb --runtime scripts/pescivendolo-v2.js --output /tmp/partenobia-v22y.html --receipt /tmp/v22y-build.json
+          echo '42cfb06dfacecd9e9053d5c109cf944263979c27cae7481fe748aaa1dd60d964  /tmp/partenobia-v22y.html' | sha256sum -c -
+      - name: Calibrate Diego V2 hanging arm pose
+        run: |
+          set -euo pipefail
+          python scripts/diego_braccia.py --baseline /tmp/partenobia-v22y.html --runtime scripts/diego-v2-arms.js --output _site/index.html --receipt _site/build.json
+          echo '3b6e9e3401865f8cf18897c02cbcbd0dab6d3d34ac373449491221be34b5e8dc  _site/index.html' | sha256sum -c -
           cp release.json _site/release.json
           touch _site/.nojekyll
-          printf 'PARTENOBIA V22Y TEST | Zombie Pescivendolo V2 | 2026-11-12\n' > _site/version.txt
+          printf 'PARTENOBIA V22Z TEST | Diego V2 braccia corrette | 2026-11-12\n' > _site/version.txt
       - name: Upload verified website
         uses: actions/upload-pages-artifact@v3
         with:
