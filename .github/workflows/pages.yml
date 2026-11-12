@@ -1,4 +1,4 @@
-name: Build and deploy PARTENOBIA V23A - Diego forward arms and proportions
+name: Build and deploy PARTENOBIA V23B - San Severo and funicular
 on:
   push:
     branches: [main]
@@ -54,11 +54,16 @@ jobs:
       - name: Hang Diego arms forward and share church perspective scale
         run: |
           set -euo pipefail
-          python scripts/diego_braccia_avanti.py --baseline /tmp/partenobia-v22z.html --runtime scripts/diego-v2-forward-arms.js --output _site/index.html --receipt _site/build.json
-          echo '5c910cdc7e0afef48cb181e053f0f5f603a93b5d428a56e8359f9f2f2ee89b8a  _site/index.html' | sha256sum -c -
+          python scripts/diego_braccia_avanti.py --baseline /tmp/partenobia-v22z.html --runtime scripts/diego-v2-forward-arms.js --output /tmp/partenobia-v23a.html --receipt /tmp/v23a-build.json
+          echo '5c910cdc7e0afef48cb181e053f0f5f603a93b5d428a56e8359f9f2f2ee89b8a  /tmp/partenobia-v23a.html' | sha256sum -c -
+      - name: San Severo fishmonger, 30 second ride, left spawn and softer arms
+        run: |
+          set -euo pipefail
+          python scripts/v23b_updates.py --baseline /tmp/partenobia-v23a.html --runtime scripts/v23b-spawn.js --output _site/index.html --receipt _site/build.json
+          echo 'bc39e3abb465c73f9eadb6c6bb6c47a46cd4693573f30b440f1df37fa24ef4ce  _site/index.html' | sha256sum -c -
           cp release.json _site/release.json
           touch _site/.nojekyll
-          printf 'PARTENOBIA V23A TEST | Diego braccia avanti e proporzioni | 2026-11-12\n' > _site/version.txt
+          printf 'PARTENOBIA V23B TEST | San Severo e funicolare | 2026-11-12\n' > _site/version.txt
       - name: Upload verified website
         uses: actions/upload-pages-artifact@v3
         with:
